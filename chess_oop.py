@@ -1,13 +1,14 @@
 class ChessFigure:
     def __init__(self, name, x, y):
         self.name = name
-        self.x = x
-        self.y = y
+        self.go(x, y)
     def __str__(self):
         return self.name + " " + str(self.x) + "," + str(self.y)
     def check(self, x, y):
-        return false
-
+        return False
+    def go(self, x, y):
+        self.x = x
+        self.y = y
 
 class King(ChessFigure):
     '''Король '''
@@ -69,31 +70,41 @@ class Queen(ChessFigure):
                 return None
         return dx == 0 or dy == 0 or dx == dy
         
-#f1 = King(1,1)
-#print(f1)
-#print(f1.check(2,2)) #True
-#print(f1.check(2,4)) #False
-#print(f1.check(1,2)) #True
-#print(f1.check(1,1)) #None
+whites = list()
+blacks = list()
 
-f1 = King(2,2)
-print(f1)
-print(f1.check(1,1))
+whites.append(King(8,3))
+blacks.append(King(5,5))
 
-f2 = Bishop(4,3)
-print(f2)
-print(f2.check(6,5))
+whites.append(Bishop(6,4))
+blacks.append(Bishop(6,1))
 
-f3 = Rook(4,3)
-print(f3)
-print(f3.check(5,4))
+whites.append(Rook(2,1))
+blacks.append(Rook(8,4))
 
-f4 = Knight(4,3)
-print(f4)
-print(f4.check(5,5))
+whites.append(Knight(4,6))
+blacks.append(Knight(6,7))
 
-f5 = Queen(4,3)
-print(f5)
-print(f5.check(6,3))
-print(f5.check(3,2))
-print(f5.check(3,1))
+whites.append(Queen(2,4))
+blacks.append(Queen(3,4))
+
+list1 = whites
+list2 = blacks
+
+o = True
+
+while o:
+    o = False
+    
+    for b in list1:
+        for w in list2:
+            if b.check(w.x, w.y):
+                print(b, " ест ", w)
+                b.go(w.x, w.y)
+                list2.remove(w)
+                o = True
+                break
+        if o:
+            break
+        
+    list1,list2 = list2,list1
