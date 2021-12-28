@@ -1,3 +1,5 @@
+import random
+
 class Point:
     '''
     Клетка на доске
@@ -13,9 +15,9 @@ class Figure:
     Шахматная фигура
     '''
     def __init__(self, p, name, is_white):
-        self.p = p
         self.name = name
         self.is_white = is_white
+        self.Go(p)
     def __str__(self):
         if self.is_white:
             s = "Белая"
@@ -26,7 +28,11 @@ class Figure:
         return []
     def EatFields(self):
         return []
-        
+    def Go(self, p):
+        if hasattr(self,"p"):
+            print(self.__str__() + " идёт на " + p.__str__())
+        self.p = p
+
 class Pawn(Figure):
     '''
     Пешка
@@ -51,14 +57,57 @@ class Pawn(Figure):
             l.append(Point(self.p.x - 1, self.p.y - 1)) 
         return l
         
-p = Point(5,1)
-#print(p)
-#print(p.x)
+def GoGame():
+    whites = []
+    for i in range(1, 9):
+        p = Point(i, 1)
+        f  = Pawn(p, True)
+        whites.append(f)
+    
+    blacks = []
+    for i in range(1, 9):
+        p = Point(i, 8)
+        f  = Pawn(p, False)
+        blacks.append(f)
+    
+    hod = random.choice(whites)
+    print(hod)
+    print()
+    # проверим, можно ли съесть что-нибудь
+    b = False
+    for i in hod.EatFields():
+        print(i)
+        for black in blacks:
+            if black.p.x == i.x and black.p.y == i.y:
+                i.Go(Point(black.p.x, black.p.y))
+                blacks.remove(black)
+                b = True
+                break
+        if b:
+            break
+    # если ничего не съели, то просто ходим
+    if not b:
+        MoveFieldsv = hod.MoveFields()
+        movepoint =  MoveFieldsv[0]
+        hod.Go(movepoint)
+    #while True:
+        
+GoGame()
 
-f = Pawn(p, False)
-print(f)
-
-l = f.EatFields()
-
-for i in l:
-    print(i)
+def Test():
+    p = Point(5,1)
+    #print(p)
+    #print(p.x)
+    
+    f = Pawn(p, False)
+    print(f)
+    
+    l = f.EatFields()
+    
+    for i in l:
+        print(i)
+    
+    l = f.MoveFields()
+    
+    for i in l:
+        print(i)
