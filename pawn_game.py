@@ -56,43 +56,84 @@ class Pawn(Figure):
             l.append(Point(self.p.x + 1, self.p.y - 1))
             l.append(Point(self.p.x - 1, self.p.y - 1)) 
         return l
-        
-def GoGame():
-    whites = []
-    for i in range(1, 9):
-        p = Point(i, 1)
-        f  = Pawn(p, True)
-        whites.append(f)
-    
-    blacks = []
-    for i in range(1, 9):
-        p = Point(i, 8)
-        f  = Pawn(p, False)
-        blacks.append(f)
-    
-    hod = random.choice(whites)
-    print(hod)
-    print()
-    # проверим, можно ли съесть что-нибудь
-    b = False
-    for i in hod.EatFields():
-        print(i)
-        for black in blacks:
-            if black.p.x == i.x and black.p.y == i.y:
-                i.Go(Point(black.p.x, black.p.y))
-                blacks.remove(black)
+
+class PawnGame:
+    def Show(self, whites, blacks):
+        # пробегаем по строкам
+        for y in range(1,9):
+            s = ''
+            # пробегаем по клеткам
+            for x in range(1,9):
                 b = True
-                break
-        if b:
-            break
-    # если ничего не съели, то просто ходим
-    if not b:
-        MoveFieldsv = hod.MoveFields()
-        movepoint =  MoveFieldsv[0]
-        hod.Go(movepoint)
-    #while True:
+                # конкретная клетка
+                # ищем, стоит ли на ней белая фигура
+                for f in whites:
+                    if f.p.x==x and f.p.y==y:
+                        s += '1'
+                        b = False
+                        break
+                if b:
+                    # ищем, стоит ли на ней черная фигура
+                    for f in blacks:
+                        if f.p.x==x and f.p.y==y:
+                            s += '0'
+                            b = False
+                            break
+                if b:
+                    s += '.'
+            print(s)
         
-GoGame()
+    def GoGame(self):
+        whites = []
+        for i in range(1, 9):
+            p = Point(i, 1)
+            f  = Pawn(p, True)
+            whites.append(f)
+        
+        blacks = []
+        for i in range(1, 9):
+            p = Point(i, 8)
+            f  = Pawn(p, False)
+            blacks.append(f)
+        
+        self.Show(whites, blacks)
+        
+        while True:
+        
+            hod = random.choice(whites)
+            print(hod)
+            print()
+            # проверим, можно ли съесть что-нибудь
+            b = False
+            for i in hod.EatFields():
+                print(i)
+                for black in blacks:
+                    if black.p.x == i.x and black.p.y == i.y:
+                        hod.Go(Point(black.p.x, black.p.y))
+                        blacks.remove(black)
+                        b = True
+                        break
+                if b:
+                    break
+            # если ничего не съели, то просто ходим
+            if not b:
+                MoveFieldsv = hod.MoveFields()
+                # TODO: проверить, не занята ли эта клетка
+                movepoint =  MoveFieldsv[0]
+                hod.Go(movepoint)
+                
+            self.Show(whites, blacks)
+            
+            if hod.is_white and hod.p.y >= 8:
+                print('Белые выиграли!')
+                break
+            if not hod.is_white and hod.p.y <= 1:
+                print('Чёрные выиграли!')
+                break
+
+        
+game = PawnGame()
+game.GoGame()
 
 def Test():
     p = Point(5,1)
