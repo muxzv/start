@@ -58,7 +58,32 @@ class Pawn(Figure):
         return l
 
 class PawnGame:
-    def Show(self, whites, blacks):
+    def __init__(self):
+        self.figures = []
+    def fill_figures(self):
+        self.figures = []
+        for i in range(1, 9):
+            p = Point(i, 1)
+            f  = Pawn(p, True)
+            self.figures.append(f)
+        for i in range(1, 9):
+            p = Point(i, 8)
+            f  = Pawn(p, False)
+            self.figures.append(f)
+    def whites(self):
+        l = []
+        for f in self.figures:
+            if f.is_white:
+                l.append(f)
+        return l
+    def blacks(self):
+        l = []
+        for f in self.figures:
+            if not f.is_white:
+                l.append(f)
+        return l
+            
+    def Show(self):
         # пробегаем по строкам
         for y in range(1,9):
             s = ''
@@ -66,63 +91,63 @@ class PawnGame:
             for x in range(1,9):
                 b = True
                 # конкретная клетка
-                # ищем, стоит ли на ней белая фигура
-                for f in whites:
+                # ищем, стоит ли на ней фигура
+                for f in self.figures:
                     if f.p.x==x and f.p.y==y:
-                        s += '1'
+                        if f.is_white:
+                            s += '1'
+                        else:
+                            s += '0'
                         b = False
                         break
-                if b:
-                    # ищем, стоит ли на ней черная фигура
-                    for f in blacks:
-                        if f.p.x==x and f.p.y==y:
-                            s += '0'
-                            b = False
-                            break
                 if b:
                     s += '.'
             print(s)
         
     def GoGame(self):
-        whites = []
-        for i in range(1, 9):
-            p = Point(i, 1)
-            f  = Pawn(p, True)
-            whites.append(f)
+        self.fill_figures()
         
-        blacks = []
-        for i in range(1, 9):
-            p = Point(i, 8)
-            f  = Pawn(p, False)
-            blacks.append(f)
+        self.Show()
         
-        self.Show(whites, blacks)
+        hod_color = True
         
         while True:
-        
-            hod = random.choice(whites)
-            print(hod)
-            print()
+            
+            if hod_color:
+                hod = random.choice(self.whites())
+                enemies = self.blacks()
+            else:
+                hod = random.choice(self.blacks())
+                enemies = self.whites()
+            #print(hod)
+            #print()
             # проверим, можно ли съесть что-нибудь
             b = False
             for i in hod.EatFields():
-                print(i)
-                for black in blacks:
+                #print(i)
+                for black in enemies:
                     if black.p.x == i.x and black.p.y == i.y:
                         hod.Go(Point(black.p.x, black.p.y))
-                        blacks.remove(black)
+                        self.figures.remove(black)
                         b = True
                         break
                 if b:
                     break
             # если ничего не съели, то просто ходим
             if not b:
+                b = True
                 MoveFieldsv = hod.MoveFields()
-                # TODO: проверить, не занята ли эта клетка
                 movepoint =  MoveFieldsv[0]
-                hod.Go(movepoint)
-                
-            self.Show(whites, blacks)
+                for i in self.figures:
+                    if i.p.x == movepoint.x and i.p.y == movepoint.y:
+                        b = False
+                        break
+                if b:
+                    hod.Go(movepoint)
+
+            if b:
+                self.Show()
+                hod_color = not hod_color
             
             if hod.is_white and hod.p.y >= 8:
                 print('Белые выиграли!')
