@@ -1,13 +1,13 @@
 # stateless code for telegram bot
 
 def Go(text, d):
-    if d == None:
+    if d == None or not isinstance(d,dict) or not ('state' in d):
         d = dict()
         d['state'] = 0
     state = int(d['state'])
     if state == 0:
         d['state'] = 1
-        return 'Привет! Правила. Введие кол во камешков:', d
+        return 'Привет! Правила. Введите кол-во камешков:', d
     elif state == 1:
         d['count'] = int(text)
         d['state'] = 2
@@ -18,11 +18,11 @@ def Go(text, d):
         count -= step
         d['count'] = count
         d['state'] = 3
-        return 'Ход второго игрока', d
+        return 'Ход второго игрока:', d
     elif state == 3:
         step = int(text)
         count = d['count']
         count -= step
         d['count'] = count
         d['state'] = 2
-        return 'Ход первого игрока', d
+        return 'Ход первого игрока:', d
