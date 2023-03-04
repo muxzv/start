@@ -5,82 +5,73 @@ field = [['0','0', '0'],['0', '0', '0'],['0', '0', '0']]
 x = '1'
 o = '2'
 win = 0
-point = [0, 0] 
+point = [0, 0]
+cn = 0
+def paintF(x, y, symbol, field): #Функция для закраски клетки в поле
+    field[x][y] = symbol
 
-def prntF(f):
-   for i in f:
-      print(*i)
+def winP(symbol): #Функция для определения победителя
+    if symbol == '1':
+        print('Крестики победили!')
+    else:
+        print('Нолики победили!')
 
-while True:
-   prntF(field)
-
-   #Ввод координат крестиков
-   tpoint = x
-   point = input('Ход крестиков! Введите координаты (через пробел)').split()
-   field[int(point[1]) - 1][int(point[0]) - 1] = tpoint
-
-   #Проверка выигрыша крестиков
+def winF(symbol): # Функция для проверки выигрыша
    #По горизонтали
-   for i in field:
+    for i in field:
          if (not '0' in i) and (not o in i):
             print('Крестики победили!')
             win = 1
             break
-   #По вертикали
-   if field[0][0] == x and field[1][0] == x and field[2][0] == x:
+    #По вертикали
+    if field[0][0] == symbol and field[1][0] == symbol and field[2][0] == symbol:
       win = 1
-      print('Крестики победили!')
-   if field[0][1] == x and field[1][1] == x and field[2][1] == x:
-      win = 1
-      print('Крестики победили!')
-   if field[0][2] == x and field[1][2] == x and field[2][2] == x:
-      win = 1
-      print('Крестики победили!')
+      return True
+    elif field[0][1] == symbol and field[1][1] == symbol and field[2][1] == symbol:
+        win = 1
+        return True
+    elif field[0][2] == symbol and field[1][2] == symbol and field[2][2] == symbol:
+        win = 1
+        return True
    #По диагонали
-   if field[0][0] == x and field[1][1] == x and field[2][2] == x:
-      win = 1
-      print('Крестики победили!')
-   if field[2][0] == x and field[1][1] == x and field[0][2] == x:
-      win = 1
-      print('Крестики победили!')
-   
-   if win == 1:
-      prntF(field)
-      break
-   
-   prntF(field)
+    elif field[0][0] == symbol and field[1][1] == symbol and field[2][2] == symbol:
+        win = 1
+        return True
+    elif field[2][0] == symbol and field[1][1] == symbol and field[0][2] == symbol:
+        win = 1
+        return True
+    else:
+        return False
 
+def prntFi(f):
+   for i in f:
+      print(*i)
+
+while True:
+    prntFi(field)
+
+    #Ввод координат крестиков
+    print('Ход крестиков!')
+    x = int(input('Введите X клетки: ')) - 1
+    y = int(input('Введите Y клетки: ')) - 1
+    #Ход
+    paintF(x, y, 'X', field)
+    if winF('X'):
+        print('Крестики победили!')
+        prntFi(field)
+        break
+    
+    prntFi(field)
+    
    #Ввод координат ноликов
-   tpoint = o
-   point = input('Ход ноликов! Введите координаты (через пробел)').split()
-   field[int(point[1]) - 1][int(point[0]) - 1] = tpoint
+    print('Ход ноликов!')
+    x = int(input('Введите X клетки: ')) - 1
+    y = int(input('Введите Y клетки: ')) - 1
+    #Ход
+    paintF(x, y, 'O', field)
+    if winF('O'):
+        print('Нолики победили!')
+        prntFi(field)
+        break
 
-   #Проверка выигрыша ноликов
-   #По горизонтали
-   for i in field:
-         if (not '0' in i) and (not x in i):
-            print('Нолики победили!')
-            win = 1
-            break
-   #По вертикали
-   if field[0][0] == o and field[1][0] == o and field[2][0] == o:
-      win = 1
-      print('Нолики победили!')
-   if field[0][1] == o and field[1][1] == o and field[2][1] == o:
-      win = 1
-      print('Нолики победили!')
-   if field[0][2] == o and field[1][2] == o and field[2][2] == o:
-      win = 1
-      print('Нолики победили!')
-   #По диагонали
-   if field[0][0] == o and field[1][1] == o and field[2][2] == o:
-      win = 1
-      print('Крестики победили!')
-   if field[2][0] == o and field[1][1] == o and field[0][2] == o:
-      win = 1
-      print('Крестики победили!')
-   
-   if win == 1:
-      prntF(field)
-      break
-
+#TODO: сделать проверку корректного/некорректного X или Y .
