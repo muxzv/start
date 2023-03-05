@@ -1,62 +1,32 @@
 #Крестики-Нолики
 
-field = [['0','0', '0'],['0', '0', '0'],['0', '0', '0']]
+field = ['1','2', '3', '4', '5', '6', '7', '8', '9']
 
-x = '1'
-o = '2'
-win = 0
-point = [0, 0]
-cn = 0
-def paintF(x, y, symbol, field): #Функция для закраски клетки в поле
-    field[x][y] = symbol
+win_indexes = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
-def winP(symbol): #Функция для определения победителя
-    if symbol == '1':
-        print('Крестики победили!')
-    else:
-        print('Нолики победили!')
+def paintP(num, symbol, field): #Функция для закраски клетки в поле
+    field[num - 1] = symbol
 
-def winF(symbol): # Функция для проверки выигрыша
-   #По горизонтали
-    for i in field:
-         if (not '0' in i) and (not o in i):
-            print('Крестики победили!')
-            win = 1
-            break
-    #По вертикали
-    if field[0][0] == symbol and field[1][0] == symbol and field[2][0] == symbol:
-      win = 1
-      return True
-    elif field[0][1] == symbol and field[1][1] == symbol and field[2][1] == symbol:
-        win = 1
-        return True
-    elif field[0][2] == symbol and field[1][2] == symbol and field[2][2] == symbol:
-        win = 1
-        return True
-   #По диагонали
-    elif field[0][0] == symbol and field[1][1] == symbol and field[2][2] == symbol:
-        win = 1
-        return True
-    elif field[2][0] == symbol and field[1][1] == symbol and field[0][2] == symbol:
-        win = 1
-        return True
-    else:
-        return False
-
+def winF(field, symbol): # Функция для проверки выигрыша
+    #По диагонали
+    for i in win_indexes:
+        if field[i[0]]==symbol and field[i[1]]==symbol and field[i[2]]==symbol:
+            return True
+    return False
+    
 def prntFi(f):
-   for i in f:
-      print(*i)
+   for i in range(0,9,3):
+      print(field[i], field[i + 1], field[i + 2])
 
 while True:
     prntFi(field)
 
     #Ввод координат крестиков
     print('Ход крестиков!')
-    x = int(input('Введите X клетки: ')) - 1
-    y = int(input('Введите Y клетки: ')) - 1
+    num = int(input('Введите номер клетки: '))
     #Ход
-    paintF(x, y, 'X', field)
-    if winF('X'):
+    paintP(num, 'X', field)
+    if winF(field, 'X'):
         print('Крестики победили!')
         prntFi(field)
         break
@@ -65,13 +35,12 @@ while True:
     
    #Ввод координат ноликов
     print('Ход ноликов!')
-    x = int(input('Введите X клетки: ')) - 1
-    y = int(input('Введите Y клетки: ')) - 1
+    num = int(input('Введите номер клетки: '))
     #Ход
-    paintF(x, y, 'O', field)
-    if winF('O'):
+    paintP(num, 'O', field)
+    if winF(field, 'O'):
         print('Нолики победили!')
         prntFi(field)
         break
 
-#TODO: сделать проверку корректного/некорректного X или Y .
+#TODO: сделать проверку корректного/некорректного номера клетки .
