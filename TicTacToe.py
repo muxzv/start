@@ -1,8 +1,14 @@
 #Крестики-Нолики
 
 field = ['1','2', '3', '4', '5', '6', '7', '8', '9']
-
+num = 2
 win_indexes = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+
+def correct_num(num, field):
+    if field[num - 1] == 'X' or field[num] == 'O' or 0 < num or num > 8:
+        return False
+    else:
+        return True
 
 def paintP(num, symbol, field): #Функция для закраски клетки в поле
     field[num - 1] = symbol
@@ -23,7 +29,8 @@ while True:
 
     #Ввод координат крестиков
     print('Ход крестиков!')
-    num = int(input('Введите номер клетки: '))
+    while not correct_num(num, field):
+        num = int(input('Введите номер клетки: '))
     #Ход
     paintP(num, 'X', field)
     if winF(field, 'X'):
@@ -35,7 +42,8 @@ while True:
     
    #Ввод координат ноликов
     print('Ход ноликов!')
-    num = int(input('Введите номер клетки: '))
+    while not correct_num(num, field):
+        num = int(input('Введите номер клетки: '))
     #Ход
     paintP(num, 'O', field)
     if winF(field, 'O'):
