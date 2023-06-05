@@ -5,19 +5,33 @@ root.title('Психолог')
 root.geometry('500x330')
 dictlist=['ты сказал мне','я говорю тебе','диагноз']
 ansdict = ['Это здорово!','Это радует','Это огорчает','Всё будет хорошо!','Это здорово!','Это радует','Это огорчает','Всё будет хорошо!','Всё будет хорошо!']
+diagnose = []
+Max = 0
 def buttonclick1():
      Input.delete(0, 'end')
      Answer.config(text = '')
 def buttonclick2():
-     n = random.randint(0,9)
+     n = random.randint(0,Max)
      Answer.config(text = ansdict[n])
 def scaleValue(event):
     n=Slider.get()
     Answer.config(text=ansdict[n])
-    
+def load():
+     global Max
+     n = 0
+     try:
+          File = open('diagnoses.txt','r')
+          for s in File:
+               diagnose.append(s.rstrip())
+               n += 1
+          Max = n - 1
+          File.close()
+     except:
+          diagnose.append('Шо то пошло не не не не так')
 
 d = []
 border = []
+load()
 
 for i in range(3):
      d.append(Label(root, text = dictlist[i]))

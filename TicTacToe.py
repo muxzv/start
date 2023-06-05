@@ -6,7 +6,7 @@ field = ['1', '2', '3',
 num = 2
 win_indexes = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 cursym = 'X'
-winsym = None
+win = 0
 
 def correct_num(num, field):
     return not(field[num] == 'X' or field[num] == 'O' or num < 0 or num > 8)
@@ -33,52 +33,55 @@ def prntFi(field):
       print(field[i], field[i + 1], field[i + 2])
 
 while True:
-    prntFi(field)
-    
-    #Проверка ничьи
-    if allF(field):
-      print('Ничья!')
-      break
-    
-    #Ввод координат
-    if cursym == 'X':
-      print('Ход крестиков!')
-    else:
-      print('Ход ноликов!')
-    
-    while True:
-        num = input('Введите номер клетки: ')
-        #Проверка на сдачу '?'
-        if num == 'сдаюсь':
-            win = 1
-            winsym = True
-            break
-        
-        if correct_num(int(num) - 1, field):
-           break
-       
-    if win == None:
-        paintP(int(num), cursym, field)
-    
-    if winsym != None:
-        winsym = cursym
-    #Проверка выигрыша 
-    elif winF(field, cursym):
-        winsym = cursym
+     prntFi(field)
+
+     #Проверка ничьи
+     if allF(field):
+          print('Ничья!')
+          break
      
-    if cursym == 'X':
-       print('Нолики победили!')
-       prntFi(field)
-       break
-    else:
-       print('Крестики победили!')
-       prntFi(field)
-       break
-    
-    if cursym == 'X':
-      cursym = 'O'
-    else:
-      cursym = 'X'
+     #Ввод координат
+     if cursym == 'X':
+          print('Ход крестиков!')
+     else:
+          print('Ход ноликов!')
+     
+     while True:
+          num = input('Введите номер клетки: ')
+          #Проверка на сдачу '?'
+          if num == 'сдаюсь':
+               if cursym == 'X':
+                     print('Нолики победили!')
+                     win = 1
+                     break
+               else:
+                    print('Крестики победили!')
+                    win = 1
+                    break
+          
+          if correct_num(int(num) - 1, field):
+               break
+
+     if win == 1:
+          break
+
+     paintP(int(num), cursym, field)
+     
+     #Проверка выигрыша 
+     if winF(field, cursym):
+          if cursym == 'X':
+               print('Крестики победили!')
+               prntFi(field)
+               break
+          else:
+               print('Нолики победили!')
+               prntFi(field)
+               break
+     
+     if cursym == 'X':
+          cursym = 'O'
+     else:
+          cursym = 'X'
     
 
 #TODO: что нибудь сделать
