@@ -1,0 +1,12 @@
+https://stepik.org/lesson/1064733
+НТО Junior 23-24. ОК "Технологии и искусственный интеллект"
+
+https://raw.githubusercontent.com/yupest/nto/master/NTO-2023/data/films.csv
+
+https://yupest2.pythonanywhere.com/api/v1.0/movies/
+https://yupest2.pythonanywhere.com/api/v1.0/movies/genres/
+https://yupest2.pythonanywhere.com/api/v1.0/movies/?genre=боевик
+
+https://yupest.pythonanywhere.com/
+
+https://test-webhook.maxsorvim.repl.co/webhook
