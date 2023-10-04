@@ -1,0 +1,21 @@
+Request:
+{"queryResult":{"parameters":{"genre":"фантастика"}}}
+
+Response:
+{
+    "fulfillmentText": "\u041b\u044e\u0434\u0438 \u0432 \u0447\u0435\u0440\u043d\u043e\u043c \u0432 \u0436\u0430\u043d\u0440\u0435 \u0444\u0430\u043d\u0442\u0430\u0441\u0442\u0438\u043a\u0430, \u0441\u0434\u0435\u043b\u0430\u043d \u0432 \u0441\u0442\u0440\u0430\u043d\u0435: \u0421\u0428\u0410 \u0441 \u0440\u0435\u0439\u0442\u0438\u043d\u0433\u043e\u043c: 7.636"
+}
+
+Decoded:
+Люди в черном в жанре фантастика, сделан в стране: США с рейтингом: 7.636
+
+Request from dialogflow:
+{"responseId": "7e0a6764-20be-474a-b347-e8c19e0def7f-afbcf665", "queryResult": {"queryText": "боевик", "parameters": {"genre": "боевик"}, "allRequiredParamsPresent": true, "fulfillmentMessages": [{"text": {"text": [""]}}], "outputContexts": [{"name": "projects/agent007-joyd/agent/sessions/bf8a2c7f-66e9-c6c6-e77c-f731231bd28f/contexts/flag", "parameters": {"person": {"name": "максим"}, "person.original": "максим", "genre": "боевик", "genre.original": "боевик"}}, {"name": "projects/agent007-joyd/agent/sessions/bf8a2c7f-66e9-c6c6-e77c-f731231bd28f/contexts/__system_counters__", "parameters": {"no-input": 0.0, "no-match": 0.0, "person": {"name": "максим"}, "person.original": "максим", "genre": "боевик", "genre.original": "боевик"}}], "intent": {"name": "projects/agent007-joyd/agent/intents/c2dfefbe-a84b-4819-b439-5a5d948dd0e8", "displayName": "Жанр"}, "intentDetectionConfidence": 1.0, "diagnosticInfo": {"query_sentiment_analysis_error": "INVALID_ARGUMENT: The language ru is not supported for document_sentiment analysis"}, "languageCode": "ru"}, "originalDetectIntentRequest": {"source": "DIALOGFLOW_CONSOLE", "payload": {}}, "session": "projects/agent007-joyd/agent/sessions/bf8a2c7f-66e9-c6c6-e77c-f731231bd28f"}
+
+Response:
+{
+    "fulfillmentText": "\u041b\u044e\u0434\u0438 \u0432 \u0447\u0435\u0440\u043d\u043e\u043c\u00a02 \u0432 \u0436\u0430\u043d\u0440\u0435 \u0431\u043e\u0435\u0432\u0438\u043a, \u0441\u0434\u0435\u043b\u0430\u043d \u0432 \u0441\u0442\u0440\u0430\u043d\u0435: \u0421\u0428\u0410 \u0441 \u0440\u0435\u0439\u0442\u0438\u043d\u0433\u043e\u043c: 6.744"
+}
+
+Decoded:
+Люди в черном 2 в жанре боевик, сделан в стране: США с рейтингом: 6.744
