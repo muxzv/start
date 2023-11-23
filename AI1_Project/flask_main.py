@@ -16,10 +16,9 @@ def index():
 def json_example():
     return 'JSON Max Object'
 
-def get_fio_output1(session, fio):
+def get_fio_output1(session, client_id, fio):
   text = f'Я узнал Вас, {fio}! Что хотите спросить?'
   outputContextName = session + "/contexts/contact"
-  contactValue = fio
 
   return {
     "fulfillmentMessages": [
@@ -36,7 +35,32 @@ def get_fio_output1(session, fio):
         "name": outputContextName,
         "lifespanCount": 50,
         "parameters": {
-          "email": contactValue
+          "client_id": client_id
+        }
+      }
+    ]
+  }
+
+def get_fio_output2(session, client_id):
+  text = 'Отлично! Что Вы хотели бы узнать?'
+  outputContextName = session + "/contexts/contact"
+  
+  return {
+    "fulfillmentMessages": [
+      {
+        "text": {
+          "text": [
+            text
+          ]
+        }
+      }
+    ],
+    "outputContexts": [
+      {
+        "name": outputContextName,
+        "lifespanCount": 50,
+        "parameters": {
+          "client_id": client_id
         }
       }
     ]
@@ -49,33 +73,39 @@ def get_fio(session, contact):
   rs_obj = rs.json()
 
   fio = rs_obj.get('fio')
-
-  if fio:
-  # строка ответа бота
-    return get_fio_output1(session, fio)
+  client_id = rs_obj.get('client_id')
+  isNewClient = rs_obj.get('is_new')
+  
+  if not isNewClient:
+    return get_fio_output1(session, client_id, fio)
   else:
-    return {'fulfillmentText': "Отлично! Что Вы хотели бы узнать?"}
+    return get_fio_output2(session, client_id) 
     
-def get_discount(contact):
-  return contact
-
+def get_discount(client_id):
+  headers={'User-Agent': 'Chrome'}
+  
+  rs = requests.get("https://cosmbrand.com/dialogflow_entry.ashx?action=discount&client_id=" + client_id, headers=headers)
+  rs_obj = rs.json()
+  discount = rs_obj.get('discount')
+  return  {'fulfillmentText': f'Ваша скидка: {discount}%.'}
+  
 def get_result():
-  # извлечение параметров
+  # извлечение параметров из запроса
   req = request.get_json(force=True)
-  #print(req)
+
   session = req.get("session")
   result = req.get("queryResult")
   parameters = result.get("parameters")
   intent = result.get("intent").get("displayName")
-  phone = parameters.get("phone-number")
-  email = parameters.get("email")
-  contact = phone if phone else email
-
+  
   if intent == "Phone":
+    phone = parameters.get("phone-number")
+    email = parameters.get("email")
+    contact = phone if phone and len(phone)>5 else email
     return get_fio(session, contact)
   elif intent == "Discount":
-    print(req)
-    return {'fulfillmentText': get_discount(contact)}
+    client_id = req['queryResult']['outputContexts'][0]['parameters']['client_id']
+    return get_discount(client_id)
   else:
     return {'fulfillmentText': 'Не понимаю тебя'}
 
