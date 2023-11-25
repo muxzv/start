@@ -1,5 +1,7 @@
 # AI1
 
+SECRET = ""
+
 import requests
 from flask import Flask, jsonify, make_response, request
 
@@ -69,7 +71,7 @@ def get_fio_output2(session, client_id):
   }
 
 def get_fio(session, contact):
-  headers={'User-Agent': 'Chrome'}
+  headers={'User-Agent': 'Chrome', 'Authorization': SECRET}
 
   rs = requests.get("https://cosmbrand.com/dialogflow_entry.ashx?action=catch&contact="+contact, headers=headers)
   rs_obj = rs.json()
@@ -84,7 +86,7 @@ def get_fio(session, contact):
     return get_fio_output2(session, client_id) 
     
 def get_discount(client_id):
-  headers={'User-Agent': 'Chrome'}
+  headers={'User-Agent': 'Chrome', 'Authorization': SECRET}
   
   rs = requests.get("https://cosmbrand.com/dialogflow_entry.ashx?action=discount&client_id=" + client_id, headers=headers)
   rs_obj = rs.json()
@@ -95,7 +97,7 @@ def get_discount_new():
   return  {'fulfillmentText': 'Вы ещё не делали у нас заказов, а скидка у нас накопительная. Поэтому пока у вас нет скидки. Ждём Ваш первый заказ!'}
 
 def order(client_id):
-  headers={'User-Agent': 'Chrome'}
+  headers={'User-Agent': 'Chrome', 'Authorization': SECRET}
   rs = requests.get("https://cosmbrand.com//dialogflow_entry.ashx?action=order_status&client_id=" + client_id, headers=headers)
   rs_obj = rs.json()
   order_status = rs_obj.get('status')
