@@ -35,7 +35,8 @@ def get_fio_output1(session, client_id, fio):
         "name": outputContextName,
         "lifespanCount": 50,
         "parameters": {
-          "client_id": client_id
+          "client_id": client_id,
+          "is_new": False
         }
       }
     ]
@@ -60,7 +61,8 @@ def get_fio_output2(session, client_id):
         "name": outputContextName,
         "lifespanCount": 50,
         "parameters": {
-          "client_id": client_id
+          "client_id": client_id,
+          "is_new": True
         }
       }
     ]
@@ -88,7 +90,20 @@ def get_discount(client_id):
   rs_obj = rs.json()
   discount = rs_obj.get('discount')
   return  {'fulfillmentText': f'Ваша скидка: {discount}%.'}
-  
+
+def get_discount_new():
+  return  {'fulfillmentText': 'Вы ещё не делали у нас заказов, а скидка у нас накопительная. Поэтому пока у вас нет скидки. Ждём Ваш первый заказ!'}
+
+def order(client_id):
+  headers={'User-Agent': 'Chrome'}
+  rs = requests.get("https://cosmbrand.com//dialogflow_entry.ashx?action=order_status&client_id=" + client_id, headers=headers)
+  rs_obj = rs.json()
+  order_status = rs_obj.get('status')
+  order_title = rs_obj.get('order_title')
+  return  {'fulfillmentText': f'Статус вашего заказа {order_title}: {order_status}'}
+
+def order_new():
+  return  {'fulfillmentText': 'У вас нет текущего заказа. Ждём, пока Вы его оформите на нашем сайте.'}
 def get_result():
   # извлечение параметров из запроса
   req = request.get_json(force=True)
@@ -98,14 +113,22 @@ def get_result():
   parameters = result.get("parameters")
   intent = result.get("intent").get("displayName")
   
-  if intent == "Phone":
+  if intent == "Contact":
     phone = parameters.get("phone-number")
     email = parameters.get("email")
     contact = phone if phone and len(phone)>5 else email
     return get_fio(session, contact)
   elif intent == "Discount":
     client_id = req['queryResult']['outputContexts'][0]['parameters']['client_id']
-    return get_discount(client_id)
+    is_new = req['queryResult']['outputContexts'][0]['parameters']['is_new']
+    return get_discount_new() if is_new else get_discount(client_id)
+  elif intent == "Order":
+    client_id = req['queryResult']['outputContexts'][0]['parameters']['client_id']
+    is_new = req['queryResult']['outputContexts'][0]['parameters']['is_new']
+    if is_new:
+      return order_new()
+    else:
+      return order(client_id)
   else:
     return {'fulfillmentText': 'Не понимаю тебя'}
 
