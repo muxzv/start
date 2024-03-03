@@ -31,7 +31,7 @@ def get_command(s):
     elif 'move_up' in s:
         return command_in_cycle(s), 'U', get_command_param(s)
     elif 'for' in s:
-        return command_in_cycle(s), 'F', get_command_param(s)
+        return False, 'F', get_command_param(s)
     else:
         return None
 
