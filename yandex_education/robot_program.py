@@ -102,7 +102,7 @@ if in_cycle:
 move_x = x - x_start
 move_y = y - y_start
 
-print(move_x, move_y)
+#print(move_x, move_y)
 
 if move_x != 0 or move_y != 0:
     if move_x > 0:
