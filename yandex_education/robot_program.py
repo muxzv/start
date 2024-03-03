@@ -3,6 +3,9 @@ def is_num(s):
         return False
     return s.isdigit()
 
+def command_in_cycle(s):
+    return len(s) > 0 and (s[0]==' ' or s[0]=='\t')
+
 def get_command_param(s):
     i1 = s.index('(')
     i2 = s.index(')')
@@ -15,32 +18,33 @@ def get_command_param(s):
         return p
 
 def get_command(s):
-    if 'move_right' in s:
-        return 'R', get_command_param(s)
+    if len(s) == 0:
+        return None
+    elif s[0] == '#':
+        return 0, '#', 0
+    elif 'move_right' in s:
+        return command_in_cycle(s), 'R', get_command_param(s)
     elif 'move_left' in s:
-        return 'L', get_command_param(s)
+        return command_in_cycle(s), 'L', get_command_param(s)
     elif 'move_down' in s:
-        return 'D', get_command_param(s)
+        return command_in_cycle(s), 'D', get_command_param(s)
     elif 'move_up' in s:
-        return 'U', get_command_param(s)
+        return command_in_cycle(s), 'U', get_command_param(s)
     elif 'for' in s:
-        return 'F', get_command_param(s)
+        return command_in_cycle(s), 'F', get_command_param(s)
     else:
         return None
 
-def command_in_cycle(s):
-    return len(s) > 0 and (s[0]==' ' or s[0]=='\t')
-
 def run_command(x, y, cmd):
-    c, p = cmd[0], cmd[1]
-    if c == 'R':
-        return x + p, y
-    elif c == 'L':
-        return x - p, y
-    elif c == 'D':
-        return x, y - p
-    elif c == 'U':
-        return x, y + p
+    c_name, c_param = cmd[1], cmd[2]
+    if c_name == 'R':
+        return x + c_param, y
+    elif c_name == 'L':
+        return x - c_param, y
+    elif c_name == 'D':
+        return x, y - c_param
+    elif c_name == 'U':
+        return x, y + c_param
 
 def print_res(c, p):
     s = c + '('
@@ -52,8 +56,8 @@ def run_commands(x, y, commands, n):
     #print(commands)
     for i in range(n):
         for c in commands:
-            if type(c[1]) == str:
-                c1 = c[0], i
+            if type(c[2]) == str:
+                c1 = c[0], c[1], i
                 x, y = run_command(x, y, c1)
             else:
                 x, y = run_command(x, y, c)
@@ -65,34 +69,30 @@ x, y = x_start, y_start
 in_cycle = False
 
 while True:
-    s = input()
-    
-    if len(s) == 0:
-        continue
-    
-    if s[0] == '#':
-        break
-    
-    cmd = get_command(s)
+    cmd = get_command(input())
     
     if cmd is None:
         continue
     
-    if cmd[0] == 'F':
-        cycle_n = cmd[1]
-        in_cycle = True
-        cycle_commands = []
-        continue
+    c_in_cycle, c_name, c_param = cmd[0], cmd[1], cmd[2]
+
+    if c_name == '#':
+        break
     
     if in_cycle:
-        if command_in_cycle(s):
+        if c_in_cycle:
             cycle_commands.append(cmd)
         else:
             x, y = run_commands(x, y, cycle_commands, cycle_n)
             in_cycle = False
             
-    if not in_cycle:
-        x, y = run_command(x, y, cmd)
+    if not in_cycle: # not elif!
+        if c_name == 'F':
+            cycle_n = c_param
+            in_cycle = True
+            cycle_commands = []
+        else:
+            x, y = run_command(x, y, cmd)
     
     #print(s, cmd, x, y)
 
