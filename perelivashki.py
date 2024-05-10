@@ -53,8 +53,8 @@ def algoritm(amount1, amount2, max1, max2):
     a1,a2 = amount1, amount2
     num = 0
     print(num,a1,a2)
-    for _ in range(6):
-        if amount1 == 0:
+    for _ in range(9):
+        if a1 == 0:
             a1 = max1
             num += 1
             print(num,a1,a2)
