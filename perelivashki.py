@@ -49,25 +49,43 @@ def perelit(current1,current2,max1,max2,action):
         current2 = max2
     return current1, current2
 
+def is_in(element, list1):
+    return element in list1
+
 def algoritm(amount1, amount2, max1, max2):
     a1,a2 = amount1, amount2
+    action_l = []
     num = 0
-    print(num,a1,a2)
-    for _ in range(9):
+    action_l.append([0,0])
+    while True:
         if a1 == 0:
             a1 = max1
             num += 1
-            print(num,a1,a2)
+            l = [a1,a2]
+            if is_in(l, action_l):
+                break
+            action_l.append(l)
         a1,a2 = perelit(a1,a2,max1,max2,0)
         num += 1
-        print(num,a1,a2)
+        l = [a1,a2]
+        if is_in(l, action_l):
+            break
+        action_l.append(l)
         if a2 == max2:
             a2 = 0
             num += 1
-            print(num,a1,a2)
+            l = [a1,a2]
+            if is_in(l, action_l):
+                break
+            action_l.append(l)
+    return action_l
 
-
-
-amount1, amount2 = 0, 0
-max1, max2 = 7, 5
-algoritm(amount1, amount2, max1, max2)
+def go(n1, n2):
+    l = algoritm(0, 0, n1, n2)
+    
+    step = 0
+    for i in l:
+        print(step, i)
+        step += 1
+        
+go(5, 7)
