@@ -1,4 +1,4 @@
-# песочные часы
+# песочные часы Тинькофф
 
 def task(max_a, max_b, max_time, good_solve):
     res = []
@@ -36,11 +36,13 @@ def task(max_a, max_b, max_time, good_solve):
             continue
         if good_solve(path):
             res.append(path)
-        l.append([time_before, max_a - a, b, path + ['a']])
-        l.append([time_before, a, max_b - b, path + ['b']])
-        l.append([time_before, max_a - a, max_b - b, path + ['ab']])
+        if a > 0 or b > 0:
+            l.append([time_before, a, b, path]) # ещё подождать
+        l.append([time_before, max_a - a, b, path + ['a']]) # перевернуть первые часы
+        l.append([time_before, a, max_b - b, path + ['b']]) # перевернуть вторые часы
+        l.append([time_before, max_a - a, max_b - b, path + ['ab']]) # перевернуть двое часов
         i += 1
-        if i > 200:
+        if i > 300:
             print("err")
             break
     return res
@@ -66,7 +68,7 @@ def good_solve2(path):
             s += i
     return s.count('a') == 2 and s.count('b') == 2
 
-print(task(7, 10, 20, good_solve1))
+print(task(7, 10, 20, good_solve1)) # задача 25.5 про кашу
 print()
 
-print(task(4, 11, 20, good_solve2))
+print(task(4, 11, 20, good_solve2)) # задача 25.6 про двое песочных часов
