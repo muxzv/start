@@ -1,19 +1,11 @@
--- Script ChangeAnimations in ServerScriptService
+-- LocalScript under Character
 
-local Players = game:GetService("Players")
 local runAnimation = "rbxassetid://18618439306" -- replace these with your own animation ids
-local JumpAnimation = "rbxassetid://18618443642" -- replace these with your own animation ids
+local jumpAnimation = "rbxassetid://18618443642" -- replace these with your own animation ids
 
-local function onCharacterAdded(character)
-	local humanoid = character:WaitForChild("Humanoid")
-	local animateScript = character:WaitForChild("Animate")
-	
-	animateScript.run.RunAnim.AnimationId = runAnimation
-	animateScript.jump.JumpAnim.AnimationId = JumpAnimation
-end
+local character = script.Parent
+local animateScript = character:WaitForChild("Animate")
 
-local function onPlayerAdded(player)
-	player.CharacterAdded:Connect(onCharacterAdded)
-end
-
-Players.PlayerAdded:Connect(onPlayerAdded)
+animateScript.run.RunAnim.AnimationId = runAnimation
+animateScript.walk.WalkAnim.AnimationId = runAnimation
+animateScript.jump.JumpAnim.AnimationId = jumpAnimation
