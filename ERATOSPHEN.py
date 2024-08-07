@@ -4,12 +4,16 @@ def ERATOSPHEN(n):
         nums.append(n)
     nums[0] = None
     nums[1] = None
-    print(nums)
     for n in nums:
         if n == None:
             continue
         for d in range(n*2,len(nums),n):
             nums[d] = None
-    return nums
+    return list(filter(NoNone, nums))
+
+def NoNone(num):
+    if num == None:
+        return False
+    return True
 
 print(ERATOSPHEN(30))
