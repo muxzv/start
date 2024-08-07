@@ -1,7 +1,5 @@
 def ERATOSPHEN(n):
-    nums = []
-    for n in range(0, n+1):
-        nums.append(True)
+    nums = [True]*(n+1)
     nums[0] = False
     nums[1] = False
     #print(nums)
