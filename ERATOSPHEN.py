@@ -12,8 +12,6 @@ def ERATOSPHEN(n):
     return list(filter(NoNone, nums))
 
 def NoNone(num):
-    if num == None:
-        return False
-    return True
+    return False if num == None else True
 
 print(ERATOSPHEN(30))
