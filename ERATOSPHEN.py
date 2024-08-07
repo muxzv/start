@@ -9,9 +9,6 @@ def ERATOSPHEN(n):
             continue
         for d in range(n*2,len(nums),n):
             nums[d] = None
-    return list(filter(NoNone, nums))
-
-def NoNone(num):
-    return False if num == None else True
+    return list(filter(lambda num: False if num == None else True, nums))
 
 print(ERATOSPHEN(30))
