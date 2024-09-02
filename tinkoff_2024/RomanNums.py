@@ -1,27 +1,10 @@
 n = int(input())
-dr = 0
-er = 0
+
 if n >= 100:
     print('C')
 else:
     e = n % 10
     d = n % 100 // 10
-    # единицы от 1 до 9
-    print(d,e)
-    if 3 >= e > 0:
-        dr = e * 'I'
-    elif e == 4:
-        dr = 'IV'
-    elif e == 5:
-        dr == 'V'
-    elif e == 6:
-        dr == 'VI'
-    elif e == 7:
-        dr == 'VII'
-    elif e == 8:
-        dr == 'VIII'
-    if e == 9:
-        dr == 'IX'
     # десятки
     if 1 <= d <= 2:
         er = 'X' * d
@@ -39,10 +22,25 @@ else:
         er = 'LXXX'
     elif d == 9:
         er = 'XC'
+    # единицы от 1 до 9
+    if e == 1 or e == 2 or e == 3:
+        dr = e * 'I'
+    elif e == 4:
+        dr = 'IV'
+    elif e == 5:
+        dr = 'V'
+    elif e == 6:
+        dr = 'VI'
+    elif e == 7:
+        dr = 'VII'
+    elif e == 8:
+        dr = 'VIII'
+    elif e == 9:
+        dr = 'IX'
     
     if d == 0:
         print(dr)
     elif e == 0:
         print(er)
     else:
-        print(str(er)+str(dr))
+        print(str(er) + str(dr))
