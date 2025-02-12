@@ -8,7 +8,7 @@ def Task(lowg_init, upg_init):
   
   while f:
     lowg, upg = lowg_init, upg_init
-    print('Загадайте число от', lowg, 'до', upg-1, 'включительно.')
+    print('Загадайте число от', lowg, 'до', upg, 'включительно.')
     
     pred = -1
   
@@ -26,12 +26,12 @@ def Task(lowg_init, upg_init):
       ans = input()
       
       if ans == '>':
-        lowg = ask
+        lowg = ask + 1
       elif ans == '<':
-        upg = ask
+        upg = ask - 1
       elif ans == '=':
         print('Число:',ask)
         f = False
         break
 
-Task(1,5)
+Task(1,100)
