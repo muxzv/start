@@ -1,37 +1,14 @@
-# > - больше
-# < - меньше
-# = - угадал
+# Число от 0 до 100
 
-def Task(lowg_init, upg_init):
+def findn(l,r):
+  ask = (int(l) + int(r)) // 2
+  print('Это число',ask,'?')
+  ans = input()
+  if ans == '=':
+    print('Загаданное число:', ask)
+  elif ans == '+':
+    findn(ask + 1,r)
+  elif ans == '-':
+    findn(l,ask - 1)
 
-  f = True
-  
-  while f:
-    lowg, upg = lowg_init, upg_init
-    print('Загадайте число от', lowg, 'до', upg, 'включительно.')
-    
-    pred = -1
-  
-    while True:
-      
-      ask = (lowg + upg) // 2
-      if not ask == pred:
-        print(f'Это {ask}?')
-        pred = ask
-      else:
-        print('Что-то пошло не так. Давайте попробуем ещё раз')
-        pred = -1
-        break
-      
-      ans = input()
-      
-      if ans == '>':
-        lowg = ask + 1
-      elif ans == '<':
-        upg = ask - 1
-      elif ans == '=':
-        print('Число:',ask)
-        f = False
-        break
-
-Task(1,100)
+findn(0,100)
