@@ -2,6 +2,8 @@ def task_eratosphen(a):
   
   nums_list = [True for i in range(a+1)]
   
+  d = {}
+  
   sqr_a = a ** 0.5
   
   simple_set = set()
@@ -13,11 +15,16 @@ def task_eratosphen(a):
       simple_set.add(i)
     for j in range(i*i, a+1, i):
       nums_list[j] = False
+      d[j] = i
     
   for i in range(i, a+1):
     if nums_list[i]:
       simple_set.add(i)
   
-  return simple_set
+  return simple_set,d
 
-print(task_eratosphen(100))
+simples, divides = task_eratosphen(100)
+
+print('simple:', simples)
+print()
+print('divides:', divides)
