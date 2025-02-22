@@ -1,4 +1,5 @@
 def visulize(num_list, i):
+  res_list = ''
   if i < 10:
     res_list = " ";
   res_list += str(i) + " "
@@ -29,7 +30,7 @@ def task_eratosphen(a):
       nums_list[j] = False
       if not j in d:
         d[j] = i
-    visulize(nums_list, i)
+    #visulize(nums_list, i)
 
   for i in range(i, a+1):
     if nums_list[i]:
@@ -37,8 +38,28 @@ def task_eratosphen(a):
 
   return simple_set,d
 
-simples, divides = task_eratosphen(20)
+simples, divides = task_eratosphen(150)
 
 print('simple:', simples)
 print()
 print('divides:', divides)
+print()
+
+def factorize_recursive(num,simples,divides,res=list()):
+  if num in simples:
+    res.append(num)
+  else:
+    divider = divides[num]
+    res.append(divider)
+    num2 = num // divider
+    factorize_recursive(num2,simples,divides,res)
+  return res
+  
+def factorize(num,simples,divides,res=list()):
+  while num > 1:
+    divider = num if num in simples else divides[num]
+    res.append(divider)
+    num //= divider
+  return res
+
+print(factorize(110,simples,divides))
