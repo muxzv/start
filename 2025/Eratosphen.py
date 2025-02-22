@@ -27,7 +27,7 @@ def task_eratosphen(a):
             d[j] = i
       #visulize(nums_list, i)
 
-  for i in range(i, a+1):
+  for i in range(i+1, a+1):
     if nums_list[i]:
       simple_set.add(i)
 
