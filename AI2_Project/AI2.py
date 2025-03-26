@@ -2,7 +2,9 @@ import json
 import requests
 import pymssql
 
-PROMPT = "The input text lists the components of cosmetic product separated by commas. For each, find the most suitable match in INCI (International Nomenclature of Cosmetic Ingredients) and display semicolon-separated list like: source component 1 -> INCI ingredient code 1; source component 2 -> INCI ingredient code 2. Some composite components may contain multiple INCI-components (sample: шаромикс 705 -> Benzoic Acid, Sorbic Acid, Dehydroacetic Acid, Benzyl alcohol)"
+LLM_PROMPT = "The input text lists the components of cosmetic product separated by commas. For each component match the component name in INCI (International Nomenclature of Cosmetic Ingredients) and get out semicolon-separated list in strict format: source 1 -> INCI ingredient code 1; source 2 -> INCI ingredient code 2. Each source (before '->') must be out exactly the same as in the input text. In case of ambiguity, choose the most suitable component. (Example: input: \"Декстрин, Сорбитол, Д-пантенолout\" output: \"Декстрин -> Dextrin; Сорбитол -> Sorbitol; Д-пантенолout -> Panthenol\")"
+LLM_MODEL = "MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF"
+LLM_HOST = "http://localhost:1234"
 
 def SplitText(s):
   s1 = s.split(',')
@@ -32,10 +34,12 @@ def FindComponentBySyn(s):
   return id
 
 def AskLLM(s):
-  url = "https://localhost:17555/llmstudio?prompt=" + PROMPT + "&request=" + s
-  response = requests.get(url)
-  s = json.loads(response)["response"]
-  return s.split(" -> ")[1]
+  url = LLM_HOST + "/v1/chat/completions" # LLM Studio
+  request_text = LLM_PROMPT + " Input text: " + s
+  payload = {"model":LLM_MODEL,"messages":[{"role":"system","content":"You are a parser of cosmetic compositions"},{"role": "user","content":request_text}],"temperature":0}
+  headers = {'Content-Type': 'application/json'}
+  response = requests.post(url, data=json.dumps(payload), headers=headers)
+  return json.loads(response.text)["choices"][0]["message"]["content"]
 
 def MainParsingTask(st):
   ResList = []
