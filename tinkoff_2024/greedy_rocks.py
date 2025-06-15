@@ -10,11 +10,11 @@ def next_item(heap,res,n):
   return m if s + m <= n else None #смотрим, проходит ли по весу самый легкий камень
 
 def task(n,kamni):
-  res = []
+  res = [] # результирующий набор
   heap = kamni.copy() # оставшиеся элементы
   heap.sort()
   while True:
-    e = next_item(heap,res,n) #берем подходящий элемент и перекладываем в рес
+    e = next_item(heap,res,n) #берем подходящий элемент и перекладываем в res
     if e == None: #если таковых нет, заканчиваем сборку камней
       break
     res.append(e)
