@@ -23,10 +23,10 @@ def next_item(heap,res):
   return None #не нашли - None
  
 
-def task(l):
+def task(l, func):
   res = []
   heap = l.copy() # оставшиеся элементы
-  heap.sort(key=lambda a: a[1]-a[0])
+  heap.sort(key=func)
 
   while True:
     
@@ -39,4 +39,6 @@ def task(l):
     heap.remove(e)
   return res
 
-print(task([(1,5),(5,10)]))
+print(task([(10,15),(1,8),(7,11)],lambda a: a[1]-a[0])) # сортировка по длине занятия
+print(task([(1,25),(1,8),(8,9)],lambda a: a[0])) # сортировка по началу занятия
+print(task([(10,15),(1,8),(7,11)],lambda a: a[1])) # сортировка по концу занятия
