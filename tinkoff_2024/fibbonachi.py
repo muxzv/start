@@ -1,27 +1,33 @@
-def fibanan(n):
-  if n == 0 or n == 1:
-    return 1
-  n = fibanan(n - 1) + fibanan(n - 2)
-  print(n)
+def fibanan(n,d):
+  if n < 1:
+    raise BaseException('Err')
+  if n in d:
+    return d[n]
+  e = fibanan(n - 1,d) + fibanan(n - 2,d)
+  d[n] = e
   return n
 
-def Task(n):
-  for e in range(1,n+1):
-    print(fibanan(e))
+def FibananFirst(n):
+  d = {1:1, 2:1}
+  fibanan(n,d)
+  return d
 
-def Task2(n):
-  fibanan(n)
+print(FibananFirst(10))
+  
+#########################################################################################
 
-#Task2(10)
-
-def fact(n):
-  if n == 0 or n == 1:
-    return 1
-  a = n * fact(n-1)
-  print(n,a)
+def fact(n,d):
+  if n < 1:
+    raise BaseException('Err')
+  if n in d:
+    return d[n]
+  a = n * fact(n-1,d)
+  d[n] = a
   return a
 
 def FactFirst(n):
-  print(fact(n))
-  
-FactFirst(5)
+  d = {1:1}
+  fact(n,d)
+  return d
+
+print(FactFirst(5))
