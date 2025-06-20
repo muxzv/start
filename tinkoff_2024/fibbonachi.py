@@ -1,4 +1,8 @@
 
+#from functools import lru_cache
+
+#@lru_cache()
+
 def fibanan(n,d = None):
   global c
   if d != None and n in d:
@@ -19,18 +23,18 @@ def FibananFirst(n):
 
 c = 0
 
-print(FibananFirst(10))
+print(FibananFirst(11))
 print('Кол-во вызовов с кэшированием:', c)
 
 c = 0
 
-print(fibanan(10))
+print(fibanan(11))
 print('Кол-во вызовов без кэширования:', c)
 
-#########################################################################################
+##############################################################
 
 def fact(n,d):
-  if n < 1:
+  if n < 0:
     raise BaseException('Err')
   if n in d:
     return d[n]
@@ -39,7 +43,7 @@ def fact(n,d):
   return a
 
 def FactFirst(n):
-  d = {1:1}
+  d = {0:1, 1:1}
   fact(n,d)
   return d
 
