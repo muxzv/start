@@ -1,7 +1,14 @@
+from functools import lru_cache
 
-#from functools import lru_cache
-
-#@lru_cache()
+@lru_cache() #помогает сохранять ранее полученнее значения фурнкции
+def fibanan2(n):
+  global c
+  c += 1
+  if n <= 2:
+    e = 1
+  else:
+    e = fibanan(n - 1) + fibanan(n - 2)
+  return e
 
 def fibanan(n,d = None):
   global c
@@ -31,6 +38,11 @@ c = 0
 print(fibanan(11))
 print('Кол-во вызовов без кэширования:', c)
 
+c = 0
+
+print(fibanan2(11))
+print('Кол-во вызовов с кэшированием:', c)
+
 ##############################################################
 
 def fact(n,d):
@@ -47,4 +59,4 @@ def FactFirst(n):
   fact(n,d)
   return d
 
-print(FactFirst(5))
+#print(FactFirst(5))
