@@ -1,19 +1,32 @@
-def fibanan(n,d):
-  if n < 1:
-    raise BaseException('Err')
-  if n in d:
+
+def fibanan(n,d = None):
+  global c
+  if d != None and n in d:
     return d[n]
-  e = fibanan(n - 1,d) + fibanan(n - 2,d)
-  d[n] = e
-  return n
+  c += 1
+  if n <= 2:
+    e = 1
+  else:
+    e = fibanan(n - 1,d) + fibanan(n - 2,d)
+  if d != None:
+    d[n] = e
+  return e
 
 def FibananFirst(n):
-  d = {1:1, 2:1}
+  d = {}
   fibanan(n,d)
   return d
 
+c = 0
+
 print(FibananFirst(10))
-  
+print('Кол-во вызовов с кэшированием:', c)
+
+c = 0
+
+print(fibanan(10))
+print('Кол-во вызовов без кэширования:', c)
+
 #########################################################################################
 
 def fact(n,d):
