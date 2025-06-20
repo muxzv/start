@@ -1,18 +1,18 @@
 from functools import lru_cache
 
-@lru_cache() #помогает сохранять ранее полученнее значения фурнкции
+@lru_cache() # включает кэширование, то есть сохраняет и использует ранее полученнее значения функции
 def fibanan2(n):
   global c
   c += 1
   if n <= 2:
     e = 1
   else:
-    e = fibanan(n - 1) + fibanan(n - 2)
+    e = fibanan2(n - 1) + fibanan2(n - 2)
   return e
 
-def fibanan(n,d = None):
+def fibanan(n, d = None):
   global c
-  if d != None and n in d:
+  if d != None and n in d: # кэширование вручную
     return d[n]
   c += 1
   if n <= 2:
@@ -23,7 +23,7 @@ def fibanan(n,d = None):
     d[n] = e
   return e
 
-def FibananFirst(n):
+def FibananFirst(n): # выдаёт первые n чисел Фиббоначи
   d = {}
   fibanan(n,d)
   return d
@@ -59,4 +59,4 @@ def FactFirst(n):
   fact(n,d)
   return d
 
-#print(FactFirst(5))
+print(FactFirst(5))
