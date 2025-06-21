@@ -1,6 +1,19 @@
 # Имеется неограниченное количество купюр стоимостью 1, 20 и 30 единиц. Найдите
 # способ выдать сумму в 100 единиц как можно меньшим количеством купюр.
 
+def task_full_rec(l,n):
+  global minn
+  if n < 100:
+    task_full_rec(l + [1], n+1)
+    task_full_rec(l + [20], n+20)
+    task_full_rec(l + [30], n+30)
+  elif n == 100:
+    if len(l) < minn:
+      minn = len(l)
+
+minn = 1000
+task_full_rec([], 0)
+print(minn)
 
 # здесь определяется жадность
 def next_item(l,res,n):
