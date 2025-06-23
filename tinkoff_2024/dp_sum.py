@@ -23,6 +23,7 @@ def task_full_rec_helper(l,n,var):
   elif n == 100:
     var.append(l)
 
+# через рекурсию выбор всех вариантов и затем выбор из них лучшего
 def task_full_rec2():
   var = []
   task_full_rec_helper([], 0,var)
@@ -39,6 +40,32 @@ def task_full_rec2():
   
 print(task_full_rec2())
 
+def task_full_rec3_helper(l,n,var):
+  if n < 100:
+    task_full_rec3_helper(l + [1], n+1, var)
+    task_full_rec3_helper(l + [20], n+20, var)
+    task_full_rec3_helper(l + [30], n+30, var)
+
+    minn = 101
+    min_l = []
+    for l in var:
+      if len(l) < minn:
+        min_l = l
+        minn = len(l)
+    
+    var.clear()
+    var.append(min_l)
+  elif n == 100:
+    var.append(l)
+
+# перебор всех вариантов через рекурсию и оптимизацией выбора лучшего варианта
+def task_full_rec3():
+  var = []
+  task_full_rec3_helper([],0,var)
+  return var[0]
+  
+print(task_full_rec3())
+
 # здесь определяется жадность
 def next_item(l,res,n):
   
@@ -48,7 +75,8 @@ def next_item(l,res,n):
   
   return None
 
-
+# если используем жадный алгоритм, то получаем неверный результат
+# для этой задачи нужно использовать динамическое программирование
 def task_greedy(n,l):
   res = [] # результирующий набор
   while True:
