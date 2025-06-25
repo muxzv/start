@@ -1,6 +1,38 @@
 # Имеется неограниченное количество купюр стоимостью 1, 20 и 30 единиц. Найдите
 # способ выдать сумму в 100 единиц как можно меньшим количеством купюр.
 
+#  вызывается при обнаружении нового варианта
+def new_variant_detected(v,global_d):
+  old_lenght = global_d['len']
+  new_length = len(v)
+  global_d['count'] += 1
+  if (new_length < old_lenght):
+    global_d['len'] = new_length
+    global_d['variant'] = v
+    
+def task_full_rec4_helper(l,n,global_d):
+  
+  if n < 100:
+    task_full_rec4_helper(l + [1], n+1,global_d)
+    task_full_rec4_helper(l + [20], n+20,global_d)
+    task_full_rec4_helper(l + [30], n+30,global_d)
+
+  elif n == 100:
+    new_variant_detected(l,global_d)
+
+# рекурсия с вспомогательной функцией фиксации вариантов
+def task_full_rec4():
+  global_d = dict()
+  global_d['len'] = 100
+  global_d['variant'] = [1]*100
+  global_d['count'] = 0
+  task_full_rec4_helper([], 0, global_d)
+  
+  return global_d['variant']
+
+print(task_full_rec4())
+
+
 def task_full_rec(l,n):
   global minn
   if n < 100:
