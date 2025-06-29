@@ -1,6 +1,9 @@
+from functools import lru_cache
 import sys
+
 sys.setrecursionlimit(10000)
 
+@lru_cache()
 def akk(m, n):
     if m == 0:
         return n + 1
@@ -11,5 +14,4 @@ def akk(m, n):
 
 int_list = list(map(int, input().split()))
 m,n = int_list[0], int_list[1]
-
 print(akk(m, n))
