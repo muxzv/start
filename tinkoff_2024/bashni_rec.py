@@ -1,18 +1,6 @@
-def bashni1(f,t,c,d):
-  d["moves"].append(f"{f} -> {t}")
+#задача про ханойские башенки
 
-def bashni2(f,t,c,d):
-  v = hlep(f,t)
-  bashni1(f,v,1,d)
-  bashni1(f,t,1,d)
-  bashni1(v,t,1,d)
-
-def bashni3(f,t,c,d):
-  v = hlep(f,t)
-  bashni2(f,v,1,d)
-  bashni1(f,t,1,d)
-  bashni2(v,t,1,d)
-
+#ищем вспомогательный палка
 def hlep(z,x):
   l1=[]
   l1.append(z)
@@ -22,7 +10,18 @@ def hlep(z,x):
   res = set(t) - set(l1) - set(l2)
   return list(res)[0]
 
+#основная (рекурсивная) функция
+def bashni(f,t,c,d):
+  if c == 1:
+    d["moves"].append(f"{f} -> {t}")
+    return
+  v = hlep(f,t)
+  bashni(f,v,c-1,d)
+  bashni(f,t,1,d)
+  bashni(v,t,c-1,d)
+
+#запуск программы
 d = dict()
 d["moves"] = []
-bashni3('a','b',3,d)
+bashni('a','b',4,d)
 print(d)
