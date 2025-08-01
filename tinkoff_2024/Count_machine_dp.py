@@ -1,21 +1,24 @@
-a = 2
-b = 10
+l = list(map(int,input().split()))
 
-dp = [0] * (b-a+1)
-dp[0] = 1
+a = l[0]
+b = l[1]
 
-for i in range(1, b-a+1):
+if a > b:
+  print(0)
+else:
+  dp = [0] * (b-a+1)
+  dp[0] = 1
   
-  if i > 0:
-    dp[i] += dp[i-1]
+  for i in range(1, b-a+1):
+    
+    if i > 0:
+      dp[i] += dp[i-1]
+    
+    n = i + a # восстанавливаем текущее число
+    
+    if n % 3 == 0:
+      n3 = n // 3 # новое число
+      if n3-a >= 0: # индекс нового числа
+        dp[i] += dp[n3-a]
   
-  n = i + a # восстанавливаем текущее число
-  
-  if n % 3 == 0:
-    n3 = n // 3 # новое число
-    if n3-a >= 0: # индекс нового числа
-      dp[i] += dp[n3-a]
-
-print(dp)
-
-print(dp[-1])
+  print(dp[-1])
