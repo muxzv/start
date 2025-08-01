@@ -1,19 +1,20 @@
-a = 5
+a = 2
 b = 10
 
-dp = [0] * (b - a)
+dp = [0] * (b-a+1)
 dp[0] = 1
 
-for i in range(1, b - a):
+for i in range(1, b-a+1):
   
-  i1 = i - 1
-  if i1 >= 0 and dp[i1] > 0:
-    dp[i] += dp[i1]
+  if i > 0:
+    dp[i] += dp[i-1]
   
-  if (i+a) % 3 == 0:
-    i3 = (i+a) // 3
-    if i3 >= 0 and dp[i3] > 0:
-      dp[i] += dp[i3]
+  n = i + a # восстанавливаем текущее число
+  
+  if n % 3 == 0:
+    n3 = n // 3 # новое число
+    if n3-a >= 0: # индекс нового числа
+      dp[i] += dp[n3-a]
 
 print(dp)
 
