@@ -9,7 +9,7 @@ model = lms.llm("openai/gpt-oss-20b")
 print(model.respond("What is the meaning of life?"))
 
 
-image_path = "C:\tmp\76.jpg"
+image_path = "C:\\tmp\\76.jpg"
 image_handle = lms.prepare_image(image_path)
 
 
