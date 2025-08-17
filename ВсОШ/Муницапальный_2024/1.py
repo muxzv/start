@@ -1,3 +1,5 @@
+#https://codeforces.com/gym/105521/problem/A
+
 a = int(input())#математика
 b = int(input())#информатика
 
