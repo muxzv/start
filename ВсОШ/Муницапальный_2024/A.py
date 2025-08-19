@@ -8,7 +8,7 @@ if on == off == first == second:
     print('Both')
 elif first == on and second == off:
     print('First')
-elif first == off second == on:
+elif first == off and second == on:
     print('Second')
 else:
     print('None')
