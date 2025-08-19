@@ -6,9 +6,9 @@ second = l[3]
 
 if on == off == first == second:
     print('Both')
-elif first == on:
+elif first == on and second == off:
     print('First')
-elif first == off:
+elif first == off second == on:
     print('Second')
 else:
     print('None')
