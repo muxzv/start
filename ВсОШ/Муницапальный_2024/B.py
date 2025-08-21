@@ -1,9 +1,10 @@
 n = 5 #int(input())
 k = 2 #int(input())
-
 a = [2,2]
 
-for e in a:
-    n -= (e % n)
+cur_n = 1
 
-print(n - 1)
+for e in a:
+    cur_n += e
+
+print(n - cur_n % n)
