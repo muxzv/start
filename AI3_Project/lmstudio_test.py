@@ -1,6 +1,6 @@
 import lmstudio as lms
 
-SERVER_API_HOST = "solnechnaya102.asuscomm.com:1234"
+SERVER_API_HOST = ""
 
 lms.configure_default_client(SERVER_API_HOST)
 
