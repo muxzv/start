@@ -13,9 +13,10 @@ letters = [
 
 
 res = 0
+for e in s:
+    for i in range(len(letters)):
+        if e in letters[i]:
+            res += i + 2
+            #print(i,e)
 
-for i in range(len(letters)):
-  if e in letters[i]:
-    res += 2 + i - 1
-    
 print(res)
