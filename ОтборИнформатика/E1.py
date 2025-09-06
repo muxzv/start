@@ -1,15 +1,14 @@
-# Задача 1E. Коллекция
 
-# решение Максима, вариант 1
-
-a = [2, 8, 4]
-
+n = int(input())
+a = list(map(int, input().split()))
 res = 0
 
-for i in a:
-  for j in a:
-    if i != j:
-      r = (a[i] - a[j]) ** 2
-      res += r
+for i in range(n):
+  j = i + 1
+  if j > len(a):
+    
+  if i != j:
+    r = (a[i] - a[j]) ** 2
+    res += r
     
 print(res)

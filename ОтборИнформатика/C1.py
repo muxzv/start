@@ -3,24 +3,17 @@
 # решение Максима, вариант 1
 
 def fill_sq(x,y,l):
-  for i in range(x, x+10):
-    for j in range(y, y+10):
-      if i <= 100 and y <= 100:
-        l[j][i] = 1
+  for i in range(x,x+10):
+    for j in range(y,y+10):
+      if i <= 100 and j <= 100:
+        l[i][j] = 1
 
+n = 0 #int(input())
 
-n = int(input())
+l = [[0]*100] * 100
+nl = [[1,1]]
+for e in nl:
+  fill_sq(e[0],e[1],l)
 
-x, y = [], []
-
-for _ in range(n):
-  a = list(map(int, input().split()))
-  x.append(a[0])
-  y.append(a[1])
-  
-l = [[0] * 100] * 100
-
-for i in range(n):
-  fill_sq(x[i], y[i])
-  
-print(l)
+for e in l:
+  print(e)
