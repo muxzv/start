@@ -1,14 +1,18 @@
-
 n = int(input())
 a = list(map(int, input().split()))
 res = 0
 
+d = dict()
+
 for i in range(n):
-  j = i + 1
-  if j > len(a):
-    
-  if i != j:
-    r = (a[i] - a[j]) ** 2
-    res += r
-    
+  for j in range(i+1,n):
+    #print(j)
+    da = a[i] - a[j]
+    if da in d.keys():
+      res += d[da]
+    else:
+      aaa = da * da
+      res += aaa
+      d[da] = aaa
+
 print(res)
