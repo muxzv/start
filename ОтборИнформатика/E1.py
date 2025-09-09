@@ -1,18 +1,9 @@
 n = int(input())
 a = list(map(int, input().split()))
-res = 0
+res = [0,0]
 
-d = dict()
+for e in a:
+  res[0] += e
+  res[1] += e*e
 
-for i in range(n):
-  for j in range(i+1,n):
-    #print(j)
-    da = a[i] - a[j]
-    if da in d.keys():
-      res += d[da]
-    else:
-      aaa = da * da
-      res += aaa
-      d[da] = aaa
-
-print(res)
+print(n * res[1] - res[0] * res[0])
