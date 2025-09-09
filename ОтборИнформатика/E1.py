@@ -7,12 +7,12 @@ d = dict()
 for i in range(n):
   for j in range(i+1,n):
     #print(j)
-    da = a[i] - a[j]
-    if da in d.keys():
+    delta = abs(a[i] - a[j])
+    if delta in d.keys():
       res += d[da]
     else:
-      aaa = da * da
-      res += aaa
-      d[da] = aaa
+      delta2 = delta * delta
+      d[da] = delta2
+      res += delta2
 
 print(res)
