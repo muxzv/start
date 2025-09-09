@@ -12,7 +12,7 @@ for i in range(n):
       res += d[delta]
     else:
       delta2 = delta * delta
-      d[da] = delta2
+      d[delta] = delta2
       res += delta2
 
 print(res)
