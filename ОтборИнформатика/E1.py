@@ -9,7 +9,7 @@ for i in range(n):
     #print(j)
     delta = abs(a[i] - a[j])
     if delta in d.keys():
-      res += d[da]
+      res += d[delta]
     else:
       delta2 = delta * delta
       d[da] = delta2
