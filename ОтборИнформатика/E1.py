@@ -1,9 +1,9 @@
 n = int(input())
 a = list(map(int, input().split()))
-res = [0,0]
+s1, s2 = 0, 0
 
 for e in a:
-  res[0] += e
-  res[1] += e*e
+  s1 += e
+  s2 += e ** 2
 
-print(n * res[1] - res[0] * res[0])
+print(n * s2 - s1 ** 2)
