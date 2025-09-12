@@ -10,5 +10,22 @@ for i in range(m+1):
     nm[i][j] = 1
     nm[n-i-1][j] = 1
 
-for i in nm:
-  print(i)
+chet = []
+nechet = []
+for e in nl:
+  if e % 2 == 0:
+    chet.append(e)
+  else:
+    nechet.append(e)
+
+aa = -1
+for i in range(n):
+  for j in range(n):
+    num = nm[i][j]
+    if num % 2 == 0:
+      nm[i][j] = chet.pop()
+    else:
+      nm[i][j] = nechet.pop()
+
+for e in nm:
+  print(*e)
